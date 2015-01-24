@@ -1,0 +1,101 @@
+1.
+#define FIRST_BYTE_MASK (0xff)
+#define THIRD_BYTE_MASK (0xff0000)
+// #define UNCHANGED_BYTES_MASK (0xff00ff00) // assumption made on int size
+#define UNCHANGED_BYTES_MASK (~(0xff00ff)) // more general definition
+#define SCRAMBLER(x) ((UNCHANGED_BYTES_MASK & (x)) | ((THIRD_BYTE_MASK & (x)) >> 16) | ((FIRST_BYTE_MASK & (x)) << 16))
+
+Note:
+Parenthesize everything
+   a. variable x
+   b. the entire expression
+
+   Try on your own:
+   // example a
+   #define MULT_THREE_BAD(x) (x * 3)
+   #define MULT_THREE(x) ((x) * 3)
+
+   int a = MULT_THREE_BAD(1+2); // expected 9, but...
+
+   // example b
+   #define ADD_THREE_BAD(x) (x) + 3
+   #define ADD_THREE(x) ((x) + 3)
+
+   int b = ADD_THREE_BAD(4) * 6; // expected 42, but...
+
+2.
+char extractByte (short* arr, int index) {
+	int targetInd = index / 2;   
+	short target = arr[targetInd];
+    
+	if (index & 1) {        
+		return (char)((target & 0xff00) >> 8);
+	} else {        
+		return (char)((target & 0x00ff));
+	}
+}
+
+         
+3. Refer to quiz
+   
+4. Refer to lab
+   
+5. 
+56 22 56 56 56 56
+   
+6. 
+a: static (r/w)
+b: static (r/w)
+c: static (ro)
+d: static (r/w)
+e: stack
+f: static (r/w)
+g: stack
+h: stack
+p: stack
+somefunc: code
+*g: heap
+
+extern int d = 44; is illegal because you can't initalize an extern variable
+
+Follow up question: so what is the current value of d?
+
+7.
+int (*fp) (int, int, unsigned short); declares a function pointer named fp which points to a function
+that takes in two int and an unsigned short arguments and returns an int.
+
+typedef int (*fp) (int, int, unsigned short); defines a fp as the alias of a function pointer type.
+An instance of fp points to a function that takes in two int and an unsigned short arguments and returns an int.
+  
+8.	
+TL4
+   
+9. 
+Plenty of sample code online
+
+   
+10.
+int* give_me_an_int_arr()
+{
+	
+	int* arr = NULL;
+	int currNum = 0;
+	int numCount = 0;
+
+	printf("please enter an int: \n");
+
+	while (scanf("%d", &currNum) != EOF)	
+	{		
+		numCount++;		
+		arr = (int*)realloc(arr, numCount * sizeof(int));
+		arr[numCount-1] = currNum;	
+		printf("please enter an int: \n");
+	}
+
+	return arr;
+}
+
+
+
+      
+      	                 

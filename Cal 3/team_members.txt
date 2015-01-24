@@ -1,0 +1,6 @@
+Team members:
+
+Shizhe Chen
+Wenqi Hu
+
+We choose the power method to be the extra credit.
